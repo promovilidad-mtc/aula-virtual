@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Mis cursos · PROMOVILIDAD</title>
+  <meta name="description" content="Aula Virtual PROMOVILIDAD: cursos de capacitación en Movilidad Urbana Sostenible."/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="css/styles.css?v=202611060003"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body { min-height: 100vh; overflow-y: auto; }
+
+    .cat-header {
+      background: var(--white); border-bottom: 1px solid var(--border);
+      height: var(--header-h); display: flex; align-items: center;
+      justify-content: space-between; padding: 0 28px;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .cat-brand { display: flex; align-items: center; gap: 10px; }
+    .cat-brand .sb-logo { width: 28px; height: 28px; border-radius: 7px; background: var(--grad); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+    .cat-brand span { font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: -.02em; }
+    .cat-user { display: flex; align-items: center; gap: 10px; }
+    .cat-user-link { display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit; padding:4px 8px; border-radius:8px; transition:.13s; }
+    .cat-user-link:hover { background:var(--gray-100); }
+    .cat-user-av { width: 30px; height: 30px; border-radius: 50%; background: var(--grad); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; }
+    .cat-user-info strong { font-size: 12.5px; display: block; font-weight: 500; letter-spacing: -.02em; }
+    .cat-user-info span { font-size: 11px; color: var(--muted); }
+
+    .cat-body { max-width: 960px; margin: 0 auto; padding: 32px 24px 64px; }
+
+    .cat-hero { margin-bottom: 36px; }
+    .cat-hero h1 { font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 300; letter-spacing: -.04em; color: var(--black); margin-bottom: 8px; }
+    .cat-hero h1 strong { font-weight: 600; }
+    .cat-hero p { font-size: 14px; color: var(--muted); }
+
+    .cat-stats { display: flex; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+    .stat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--r); padding: 14px 20px; flex: 1; min-width: 140px; box-shadow: var(--shadow-xs); }
+    .stat-card .num { font-size: 28px; font-weight: 300; letter-spacing: -.04em; line-height: 1; margin-bottom: 4px; }
+    .stat-card .num.grad { background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-card .lbl { font-size: 11px; color: var(--muted); letter-spacing: -.01em; }
+
+    .sec-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--gray-300); margin-bottom: 14px; }
+
+    .course-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 36px; }
+
+    .course-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 18px 20px;
+      display: flex; align-items: center; gap: 16px;
+      transition: border-color .15s, box-shadow .15s;
+      position: relative; overflow: hidden;
+    }
+    .course-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 3px; opacity: 0; transition: .2s opacity;
+    }
+    .course-card.cc-purple::before  { background: var(--purple); }
+    .course-card.cc-magenta::before { background: var(--magenta); }
+    .course-card.cc-blue::before    { background: var(--blue); }
+    .course-card:hover { border-color: var(--gray-200); box-shadow: var(--shadow-sm); }
+    .course-card:hover::before { opacity: 1; }
+
+    .course-num {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 300; flex-shrink: 0; letter-spacing: -.04em;
+    }
+    .cc-purple  .course-num { background: var(--purple-lt);  color: var(--purple); }
+    .cc-magenta .course-num { background: var(--magenta-lt); color: var(--magenta); }
+    .cc-blue    .course-num { background: var(--blue-lt);    color: var(--blue); }
+
+    .course-info { flex: 1; min-width: 0; }
+    .course-info h3 { font-size: 13.5px; font-weight: 600; letter-spacing: -.02em; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .course-info p  { font-size: 12px; color: var(--muted); }
+
+    .course-status { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+    .status-badge { font-size: 10.5px; font-weight: 500; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+    .sb-matriculado { background: var(--blue-lt); color: var(--blue); }
+    .sb-progreso    { background: var(--amber-bg); color: var(--amber); }
+    .sb-completado  { background: var(--green-bg); color: #1a7a35; }
+    .sb-disponible  { background: var(--gray-100); color: var(--gray-400); }
+
+    .mini-prog { width: 120px; }
+    .mini-prog-bar { height: 3px; background: var(--gray-100); border-radius: 99px; overflow: hidden; margin-bottom: 3px; }
+    .mini-prog-fill { height: 100%; background: var(--grad); border-radius: 99px; }
+    .mini-prog span { font-size: 10px; color: var(--muted); }
+
+    .btn-matricula {
+      padding: 7px 14px; border-radius: var(--r-sm);
+      font-size: 12px; font-weight: 500; font-family: var(--font);
+      cursor: pointer; border: 1px solid transparent;
+      transition: .13s; letter-spacing: -.01em; white-space: nowrap;
+    }
+    .bm-disponible { background: var(--grad); color: #fff; }
+    .bm-disponible:hover { opacity: .9; }
+    .bm-ingresar { background: var(--gray-900); color: #fff; border-color: var(--gray-900); }
+    .bm-ingresar:hover { background: var(--gray-600); }
+    .bm-completado { background: var(--green-bg); color: #1a7a35; border-color: rgba(48,209,88,.2); cursor: default; }
+
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.4);
+      display: none; align-items: center; justify-content: center;
+      z-index: 100; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 16px;
+      padding: 32px; max-width: 420px; width: 100%;
+      box-shadow: var(--shadow-md);
+    }
+    .modal h3 { font-size: 18px; font-weight: 600; letter-spacing: -.03em; margin-bottom: 8px; }
+    .modal p  { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 24px; }
+    .modal-acts { display: flex; gap: 10px; justify-content: flex-end; }
+
+    .loading { display: flex; align-items: center; justify-content: center; padding: 48px; color: var(--muted); font-size: 13px; gap: 10px; }
+  </style>
+</head>
+<body data-page="catalogo">
+
+  <div id="carga-global" class="carga-global" role="status">
+    <div class="carga-caja"><div class="carga-spin"></div><p>Cargando tus cursos...</p></div>
+  </div>
+
+  <header class="cat-header">
+    <a class="cat-brand" href="catalogo.html" title="Mis cursos">
+      <img class="app-logo-img" src="assets/logo-promovilidad-color.webp" width="720" height="81" alt="PROMOVILIDAD"/>
+    </a>
+    <div class="cat-user">
+      <a href="perfil.html" class="cat-user-link" title="Mi perfil">
+        <div class="cat-user-av" id="cat-initials">??</div>
+        <div class="cat-user-info">
+          <strong id="cat-nombre">Cargando...</strong>
+          <span id="cat-perfil"></span>
+        </div>
+      </a>
+      <button class="btn btn-sm btn-ghost" id="btn-salir">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="cat-body">
+
+    <div class="cat-hero fu">
+      <p class="cat-saludo" id="cat-saludo">Hola</p>
+      <h1>Mis cursos</h1>
+      <p id="cat-subtitulo">Cursos disponibles para tu perfil</p>
+    </div>
+
+    <div class="cat-stats fu d1">
+      <div class="stat-card">
+        <span class="stat-ic ic-azul"><i class="fa-solid fa-book-open-reader"></i></span>
+        <div><div class="num" id="stat-encurso">—</div><div class="lbl">En curso</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-ic ic-verde"><i class="fa-solid fa-award"></i></span>
+        <div><div class="num" id="stat-completados">—</div><div class="lbl">Aprobados</div></div>
+      </div>
+      <div class="stat-card">
+        <span class="stat-ic ic-gris"><i class="fa-solid fa-layer-group"></i></span>
+        <div><div class="num" id="stat-disponibles">—</div><div class="lbl">Por empezar</div></div>
+      </div>
+    </div>
+
+    <section id="sec-matriculados" class="cat-sec" style="display:none">
+      <h2 class="cat-sec-tit">Inscritos</h2>
+      <div class="cur-grid" id="grid-matriculados"></div>
+    </section>
+
+    <section id="sec-disponibles" class="cat-sec">
+      <h2 class="cat-sec-tit">Disponibles para ti</h2>
+      <div class="cur-grid" id="grid-disponibles">
+        <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Cargando cursos...</div>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal fu">
+      <h3 id="modal-titulo">¿Matricularte en este curso?</h3>
+      <p id="modal-desc">Al matricularte tendrás acceso completo al contenido, quizzes y podrás entregar el trabajo final para obtener tu constancia.</p>
+      <div class="modal-acts">
+        <button class="btn btn-ghost" id="modal-cancelar">Cancelar</button>
+        <button class="btn btn-grad" id="modal-confirmar">
+          <i class="fa-solid fa-check"></i> Matricularme
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="js/supabase.js?v=202611060003"></script>
+  <script type="module" src="js/app.js?v=202611060003"></script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Quiz · PROMOVILIDAD</title>
+  <meta name="description" content="Aula Virtual PROMOVILIDAD: cursos de capacitación en Movilidad Urbana Sostenible."/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="css/styles.css?v=202611060003"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>body { overflow: hidden; height: 100vh; }</style>
+</head>
+<body data-page="quiz">
+
+  <div id="carga-global" class="carga-global" role="status">
+    <div class="carga-caja"><div class="carga-spin"></div><p>Preparando tu quiz...</p></div>
+  </div>
+
+  <div class="quiz-page">
+
+    <div class="qz-top">
+      <div class="qz-top-l">
+        <h2 id="qz-titulo">Quiz</h2>
+        <p>1 solo intento · 10 minutos · tus respuestas se guardan solas</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="timer" id="timer">
+          <i class="fa-regular fa-clock"></i>
+          <span id="timer-txt">10:00</span>
+        </div>
+        <button class="btn btn-sm btn-ghost" id="btn-cancelar" title="Entrega el quiz con lo que llevas respondido">
+          <i class="fa-solid fa-flag-checkered"></i> Entregar y salir
+        </button>
+      </div>
+    </div>
+
+    <div class="qz-body">
+      <div class="qz-inner">
+
+        <div class="qz-prog">
+          <div class="qz-prog-fill" id="qz-fill" style="width:0%"></div>
+        </div>
+
+        <div class="q-card">
+          <div class="q-meta">
+            <span class="q-tag" id="q-tag">Pregunta 1 de 4</span>
+            <span class="q-pts">5 puntos</span>
+          </div>
+          <div class="q-text" id="q-text">Cargando pregunta...</div>
+          <div class="opts" id="q-opts"></div>
+        </div>
+
+        <div class="qz-foot">
+          <span class="qz-hint" id="qz-hint">Selecciona una respuesta</span>
+          <button class="btn btn-dark" id="btn-nq" disabled>
+            Siguiente <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="js/supabase.js?v=202611060003"></script>
+  <script type="module" src="js/app.js?v=202611060003"></script>
+</body>
+</html>

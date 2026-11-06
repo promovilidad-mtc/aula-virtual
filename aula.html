@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Aula Virtual · PROMOVILIDAD</title>
+  <meta name="description" content="Aula Virtual PROMOVILIDAD: cursos de capacitación en Movilidad Urbana Sostenible."/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="css/styles.css?v=202611060003"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body { overflow: hidden; height: 100vh; }
+  </style>
+</head>
+<body data-page="aula">
+
+  <div id="carga-global" class="carga-global" role="status">
+    <div class="carga-caja"><div class="carga-spin"></div><p>Cargando tu curso...</p></div>
+  </div>
+
+  <div class="aula-page">
+
+    <aside class="sidebar">
+      <div class="sb-top">
+        <div class="sb-course">
+          <img class="app-logo-img sb-logo-img" src="assets/logo-promovilidad-color.webp" width="720" height="81" alt="PROMOVILIDAD"/>
+          <small id="sb-curso">Cargando curso...</small>
+        </div>
+      </div>
+
+      <div class="sb-user">
+        <div class="sb-av" id="sb-initials">??</div>
+        <div class="sb-ui">
+          <strong id="sb-nombre">Cargando...</strong>
+          <span id="sb-perfil"></span>
+        </div>
+      </div>
+
+      <div class="sb-prog">
+        <div class="sb-pr">
+          <span>Tu avance</span>
+          <strong id="prog-pct">0 %</strong>
+        </div>
+        <div class="prog-track">
+          <div class="prog-fill" id="prog-fill" style="width:0%"></div>
+        </div>
+        <div class="sb-pr-pie">
+          <span id="prog-label">0 de 0 clases</span>
+          <a class="sb-ver-res" id="sb-ver-res" href="catalogo.html">Ver resultado <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+      </div>
+
+      <div class="sb-sec">Módulos</div>
+      <div class="sb-nav" id="sb-nav">
+        <div style="padding:16px;font-size:12px;color:var(--gray-300)">Cargando módulos...</div>
+      </div>
+
+      <div class="sb-pie">
+        <button class="sb-salir" id="btn-salir" type="button">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión
+        </button>
+      </div>
+    </aside>
+    <div class="sb-backdrop" onclick="document.body.classList.remove('sb-abierto')"></div>
+
+    <div class="main">
+
+      <div class="topbar">
+        <button class="btn btn-sm btn-ghost btn-menu" id="btn-menu" aria-label="Abrir menú de módulos">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <a class="btn btn-sm btn-volver" id="btn-volver" href="catalogo.html" title="Volver al detalle del curso">
+          <i class="fa-solid fa-arrow-left"></i><span>Volver al curso</span>
+        </a>
+        <div class="tb-l">
+          <h2 id="tb-title">Selecciona un módulo</h2>
+          <p id="tb-sub">Aula Virtual PROMOVILIDAD</p>
+        </div>
+      </div>
+
+      <div class="content">
+
+        <div class="v-panel">
+
+          <div id="panel-descripcion" class="panel-lectura" style="display:none">
+            <div class="pl-cab">
+              <span class="pl-ic"><i class="fa-solid fa-book-open"></i></span>
+              <div>
+                <div class="pl-eti">Lectura</div>
+                <h3 id="desc-titulo"></h3>
+              </div>
+            </div>
+            <div id="desc-texto" class="pl-texto"></div>
+          </div>
+
+          <div id="panel-texto-video" style="display:none;padding:10px 4px 8px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:3px;height:16px;border-radius:99px;background:var(--g-blue);flex-shrink:0"></div>
+              <p id="texto-video" style="font-size:13px;font-weight:500;color:var(--gray-600);margin:0"></p>
+            </div>
+          </div>
+
+          <div class="v-wrap" id="v-wrap">
+            <div class="v-ph" id="v-ph">
+              <i class="fa-regular fa-circle-play"></i>
+              <p id="ph-txt">Selecciona una clase para comenzar</p>
+            </div>
+          </div>
+
+          <div class="v-barra">
+            <div class="v-barra-izq">
+              <button class="btn btn-sm btn-ghost" id="btn-prev">
+                <i class="fa-solid fa-chevron-left"></i> Anterior
+              </button>
+              <button class="btn btn-sm btn-ghost" id="btn-next">
+                Siguiente <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+            <div class="v-barra-der">
+              <a class="btn btn-sm btn-ghost" id="yt-link" href="https://youtube.com" target="_blank" rel="noopener">
+                <i class="fa-brands fa-youtube" style="color:#ff0000"></i> YouTube
+              </a>
+              <button class="btn btn-sm btn-dark" id="btn-completar">
+                <i class="fa-solid fa-check"></i> Completar clase
+              </button>
+              <button class="btn btn-sm btn-amber" id="btn-quiz">
+                <i class="fa-solid fa-clipboard-question"></i> Rendir quiz
+              </button>
+            </div>
+          </div>
+
+          <div class="aviso-curso" id="aviso-curso" hidden></div>
+
+          <div class="aula-tabs" role="tablist" aria-label="Información de la clase">
+            <button class="aula-tab" role="tab" data-tab="desc" id="t-desc">
+              <i class="fa-solid fa-align-left"></i> Descripción
+            </button>
+            <button class="aula-tab" role="tab" data-tab="mat" id="t-mat">
+              <i class="fa-solid fa-folder-open"></i> Materiales <span class="aula-tab-n" id="n-mat"></span>
+            </button>
+            <button class="aula-tab" role="tab" data-tab="quiz" id="t-quiz">
+              <i class="fa-solid fa-clipboard-question"></i> Quiz <span class="aula-tab-punto" id="p-quiz" hidden></span>
+            </button>
+            <button class="aula-tab" role="tab" data-tab="cons" id="t-cons">
+              <i class="fa-solid fa-comments"></i> Consultas <span class="aula-tab-n" id="n-cons"></span>
+            </button>
+          </div>
+
+          <div class="aula-panel" role="tabpanel" id="tab-desc">
+            <div class="clase-desc" id="clase-desc" hidden></div>
+          </div>
+
+          <div class="aula-panel" role="tabpanel" id="tab-mat" hidden>
+            <div id="card-recursos" style="display:none">
+              <div id="lista-recursos" class="lista-recursos"></div>
+            </div>
+            <p class="tab-vacio" id="mat-vacio">Esta clase no tiene materiales para descargar.</p>
+          </div>
+
+          <div class="aula-panel" role="tabpanel" id="tab-quiz" hidden>
+            <div class="qs-wrap">
+              <div class="qs-hd"><i class="fa-solid fa-clipboard-question"></i> Quiz de esta clase</div>
+              <div class="qs-score" id="qs-score">—</div>
+              <div class="qs-label" id="qs-label">Sin rendir · 1 solo intento</div>
+              <div class="qs-bar"><div class="qs-fill" id="qs-fill" style="width:0%"></div></div>
+              <button class="btn btn-sm btn-amber" id="btn-quiz2">Iniciar quiz</button>
+            </div>
+          </div>
+
+          <div class="aula-panel" role="tabpanel" id="tab-cons" hidden>
+            <div class="consulta-caja">
+              <label class="fl" for="ask-ta">¿Tienes una duda sobre esta clase? Escríbele a la profesora</label>
+              <textarea class="ask-ta" id="ask-ta" rows="3" placeholder="Escribe tu pregunta sobre esta clase…"></textarea>
+              <div class="consulta-pie">
+                <button class="btn btn-sm btn-dark" id="btn-consulta">
+                  <i class="fa-solid fa-paper-plane"></i> Enviar consulta
+                </button>
+              </div>
+            </div>
+            <div id="mis-consultas"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="js/supabase.js?v=202611060003"></script>
+  <script type="module" src="js/app.js?v=202611060003"></script>
+</body>
+</html>

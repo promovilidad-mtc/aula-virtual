@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Curso · PROMOVILIDAD</title>
+  <meta name="description" content="Aula Virtual PROMOVILIDAD: cursos de capacitación en Movilidad Urbana Sostenible."/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="css/styles.css?v=202611060003"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body data-page="curso">
+
+  <div id="carga-global" class="carga-global" role="status">
+    <div class="carga-caja"><div class="carga-spin"></div><p>Cargando el curso...</p></div>
+  </div>
+
+  <header class="app-header">
+    <a class="app-brand" href="catalogo.html" title="Mis cursos">
+      <img class="app-logo-img" src="assets/logo-promovilidad-color.webp" width="720" height="81" alt="PROMOVILIDAD"/>
+    </a>
+    <div class="app-user">
+      <a href="perfil.html" class="app-user-link" title="Mi perfil">
+        <div class="app-user-av" id="det-initials">??</div>
+        <div class="app-user-info">
+          <strong id="det-nombre">Cargando...</strong>
+          <span id="det-perfil"></span>
+        </div>
+      </a>
+      <button class="btn btn-sm btn-ghost" id="btn-salir" title="Cerrar sesión">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="det-body">
+
+    <a class="det-volver" href="catalogo.html"><i class="fa-solid fa-arrow-left"></i> Mis cursos</a>
+
+    <section class="det-hero fu">
+      <div class="det-hero-txt">
+        <span class="cur-chip ch-azul det-chip" id="det-chip">En curso</span>
+        <h1 class="det-titulo" id="det-titulo">Cargando...</h1>
+        <p class="det-desc" id="det-desc"></p>
+        <ul class="det-meta" id="det-meta"></ul>
+        <div class="det-acciones">
+          <a class="btn btn-dark det-btn-principal" id="det-continuar" href="#">
+            <i class="fa-solid fa-play"></i> <span>Continuar donde lo dejé</span>
+          </a>
+          <span class="det-sig" id="det-siguiente"></span>
+        </div>
+      </div>
+      <div class="det-hero-img" id="det-portada">
+        <div class="det-prog-card">
+          <div class="det-anillo" id="det-anillo" style="--p:0">
+            <svg viewBox="0 0 120 120" aria-hidden="true">
+              <circle class="an-fondo" cx="60" cy="60" r="52"/>
+              <circle class="an-valor" cx="60" cy="60" r="52"/>
+            </svg>
+            <strong id="det-pct">0 %</strong>
+          </div>
+          <div class="det-prog-txt">
+            <strong>Tu avance</strong>
+            <span id="det-prog-clases">— clases</span>
+            <span id="det-prog-quizzes"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="det-grid">
+
+      <section class="det-contenido">
+        <h2 class="cat-sec-tit">Contenido del curso</h2>
+        <div id="det-modulos" class="det-modulos">
+          <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Cargando módulos...</div>
+        </div>
+      </section>
+
+      <aside class="det-lado">
+
+        <div class="card" id="card-resultado">
+          <div class="card-hd"><i class="fa-solid fa-chart-simple"></i> Mi resultado</div>
+          <span class="res-estado re-en_curso" id="res-estado">En curso</span>
+          <div class="avg-row"><span>Clases completadas</span><strong id="res-clases">—</strong></div>
+          <div class="avg-row"><span>Quizzes rendidos</span><strong id="res-quizzes">—</strong></div>
+          <div class="avg-row"><span>Promedio de quizzes</span><strong id="res-promedio">—</strong></div>
+          <div class="avg-row" id="res-intento-row" hidden><span>Intento</span><strong id="res-intento">1</strong></div>
+          <p class="res-msg" id="res-msg"></p>
+          <button class="btn btn-sm btn-grad" id="btn-reiniciar" style="width:100%;justify-content:center;margin-top:10px" hidden>
+            <i class="fa-solid fa-rotate-left"></i> Volver a dar el curso
+          </button>
+        </div>
+
+        <div class="card" id="card-trabajo" hidden>
+          <div class="card-hd"><i class="fa-solid fa-file-circle-check"></i> Trabajo final</div>
+          <div id="trab-form">
+            <p class="trab-estado" style="margin:0 0 8px">
+              Sube tu trabajo a tu Google Drive, compártelo como
+              <strong>"Cualquier persona con el enlace"</strong> y pega aquí el enlace.
+            </p>
+            <input class="trab-input" id="trab-enlace" placeholder="https://drive.google.com/..." autocomplete="off"/>
+            <button class="btn btn-sm btn-grad" id="btn-trabajo" style="width:100%;justify-content:center;margin-top:8px">
+              <i class="fa-solid fa-paper-plane"></i> Enviar trabajo
+            </button>
+          </div>
+          <p class="trab-estado" id="trab-estado"></p>
+        </div>
+
+        <div class="card det-reglas">
+          <div class="card-hd"><i class="fa-solid fa-circle-info"></i> Cómo se aprueba</div>
+          <ul>
+            <li><i class="fa-solid fa-lock-open"></i> Las clases se abren en orden: termina el video y su quiz para pasar a la siguiente.</li>
+            <li><i class="fa-regular fa-clock"></i> Cada quiz tiene 1 solo intento y 10 minutos.</li>
+            <li><i class="fa-solid fa-calculator"></i> Tu nota final es el promedio de los quizzes. Apruebas con 12.</li>
+            <li id="det-regla-trabajo" hidden><i class="fa-solid fa-file-circle-check"></i> Al terminar, envía tu trabajo final para su revisión.</li>
+          </ul>
+        </div>
+
+      </aside>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="js/supabase.js?v=202611060003"></script>
+  <script type="module" src="js/app.js?v=202611060003"></script>
+</body>
+</html>

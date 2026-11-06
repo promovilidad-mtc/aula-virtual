@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Solicitud en revisión · PROMOVILIDAD</title>
+  <meta name="description" content="Aula Virtual PROMOVILIDAD: cursos de capacitación en Movilidad Urbana Sostenible."/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="css/styles.css?v=202611060003"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body data-page="pendiente">
+
+  <div id="carga-global" class="carga-global" role="status">
+    <div class="carga-caja"><div class="carga-spin"></div><p>Revisando tu solicitud...</p></div>
+  </div>
+
+  <div class="pend-page">
+    <a class="pag-logo" href="index.html" title="Aula Virtual PROMOVILIDAD"><img src="assets/logo-promovilidad-color.webp" width="720" height="81" alt="PROMOVILIDAD"/></a>
+    <div class="pend-card fu">
+
+      <div class="pend-icon" id="pend-icono">
+        <i class="fa-solid fa-hourglass-half"></i>
+      </div>
+
+      <h2 id="pend-titulo">Solicitud en revisión</h2>
+      <p id="pend-texto">
+        Recibimos tus datos como <strong id="pend-perfil">tu perfil</strong>.
+        Te avisaremos a <strong id="pend-email">tu correo</strong> cuando tu acceso esté activo.
+      </p>
+
+      <div class="pend-steps" id="pend-pasos">
+        <div class="ps">
+          <div class="ps-n"><i class="fa-solid fa-check" style="font-size:8px"></i></div>
+          <span>Ingresaste con Google y completaste tus datos.</span>
+        </div>
+        <div class="ps">
+          <div class="ps-n">2</div>
+          <span>El equipo PROMOVILIDAD verifica tu perfil (1–3 días hábiles).</span>
+        </div>
+        <div class="ps">
+          <div class="ps-n">3</div>
+          <span>Cuando te aprueben, vuelve a esta página e ingresa con Google.</span>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn btn-grad" style="justify-content:center" id="btn-revisar">
+          <i class="fa-solid fa-rotate"></i> Revisar estado
+        </button>
+        <a class="btn" style="justify-content:center" href="perfil.html" id="btn-editar">
+          <i class="fa-solid fa-pen"></i> Corregir mis datos
+        </a>
+        <button class="btn btn-ghost" style="justify-content:center" id="btn-salir">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i> Cerrar sesión
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="js/app.js?v=202611060003"></script>
+</body>
+</html>

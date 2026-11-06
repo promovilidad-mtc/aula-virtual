@@ -1,0 +1,404 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Panel Admin · PROMOVILIDAD</title>
+  <meta name="description" content="Aula Virtual PROMOVILIDAD: cursos de capacitación en Movilidad Urbana Sostenible."/>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png"/>
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png"/>
+  <meta name="theme-color" content="#ffffff"/>
+  <link rel="stylesheet" href="css/styles.css?v=202611060003"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body { min-height:100vh; overflow-y:auto; }
+
+    .admin-header {
+      background:var(--white);border-bottom:1px solid var(--border);
+      height:var(--header-h);display:flex;align-items:center;
+      justify-content:space-between;padding:0 28px;
+      position:sticky;top:0;z-index:10;
+    }
+    .admin-brand { display:flex;align-items:center;gap:10px; }
+    .admin-brand .sb-logo { width:28px;height:28px;border-radius:7px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff; }
+    .admin-brand span { font-size:13px;font-weight:600;color:var(--text); }
+    .admin-badge { font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--purple-lt);color:var(--purple);border:1px solid var(--purple-md);margin-left:8px; }
+
+    .admin-body { max-width:100%;padding:24px 32px 64px; }
+
+    .tabs { display:flex;gap:4px;margin-bottom:24px;border-bottom:1px solid var(--border);padding-bottom:0; }
+    .tab {
+      padding:10px 18px;font-size:13px;font-weight:500;
+      cursor:pointer;border:none;background:none;
+      color:var(--muted);font-family:var(--font);
+      border-bottom:2px solid transparent;margin-bottom:-1px;
+      transition:.15s;letter-spacing:-.01em;
+    }
+    .tab:hover { color:var(--text); }
+    .tab.active { color:var(--magenta);border-bottom-color:var(--magenta); }
+    .tab-badge {
+      display:inline-flex;align-items:center;justify-content:center;
+      width:18px;height:18px;border-radius:50%;
+      background:var(--red);color:#fff;
+      font-size:9px;font-weight:700;margin-left:6px;
+    }
+
+    .tab-panel { display:none; }
+    .tab-panel.active { display:block; }
+
+    .admin-stats { display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px; }
+    .stat-box { background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:16px 20px;box-shadow:var(--shadow-xs); }
+    .stat-box .n { font-size:32px;font-weight:300;letter-spacing:-.04em;line-height:1;margin-bottom:4px; }
+    .stat-box .l { font-size:11px;color:var(--muted); }
+    .n-purple { color:var(--purple); }
+    .n-magenta { color:var(--magenta); }
+    .n-amber   { color:var(--amber); }
+    .n-green   { color:#1a7a35; }
+
+    .admin-table-wrap { background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow-xs); }
+    .admin-table { width:100%;border-collapse:collapse;font-size:13px; }
+    .admin-table thead tr { border-bottom:1px solid var(--border);background:var(--gray-50); }
+    .admin-table thead th { padding:8px 10px;text-align:left;font-size:10.5px;font-weight:600;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap; }
+    .admin-table tbody tr { border-bottom:1px solid var(--border);transition:.1s background; }
+    .admin-table tbody tr:last-child { border-bottom:none; }
+    .admin-table tbody tr:hover { background:var(--gray-50); }
+    .admin-table td { padding:10px;vertical-align:middle;white-space:normal;word-break:break-word;font-size:12.5px; }
+    .admin-table-wrap { overflow-x:auto;width:100%; }
+    .admin-table { width:100%;table-layout:fixed;min-width:900px; }
+    .admin-table th:nth-child(1), .admin-table td:nth-child(1) { width:14%; }
+    .admin-table th:nth-child(2), .admin-table td:nth-child(2) { width:17%; }
+    .admin-table th:nth-child(3), .admin-table td:nth-child(3) { width:9%; }
+    .admin-table th:nth-child(4), .admin-table td:nth-child(4) { width:12%; }
+    .admin-table th:nth-child(5), .admin-table td:nth-child(5) { width:14%; }
+    .admin-table th:nth-child(6), .admin-table td:nth-child(6) { width:7%; }
+    .admin-table th:nth-child(7), .admin-table td:nth-child(7) { width:8%; }
+    .admin-table th:nth-child(8), .admin-table td:nth-child(8) { width:9%; }
+    .admin-table th:nth-child(9), .admin-table td:nth-child(9) { width:10%; }
+
+    .sp { display:inline-block;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:500; }
+    .sp-pendiente  { background:var(--amber-bg);color:var(--amber);border:1px solid rgba(255,149,0,.2); }
+    .sp-activo     { background:var(--green-bg);color:#1a7a35;border:1px solid rgba(48,209,88,.2); }
+    .sp-inactivo   { background:var(--gray-100);color:var(--muted);border:1px solid var(--border); }
+    .sp-rechazado  { background:var(--red-bg);color:var(--red);border:1px solid rgba(255,59,48,.2); }
+    .sp-completado { background:var(--green-bg);color:#1a7a35;border:1px solid rgba(48,209,88,.2); }
+    .sp-progreso   { background:var(--amber-bg);color:var(--amber);border:1px solid rgba(255,149,0,.2); }
+
+    .act-btns { display:flex;gap:6px;align-items:center; }
+    .act-btn {
+      padding:5px 10px;border-radius:6px;font-size:11.5px;font-weight:500;
+      cursor:pointer;border:1px solid transparent;font-family:var(--font);
+      transition:.13s;white-space:nowrap;
+    }
+    .ab-activar   { background:var(--green-bg);color:#1a7a35;border-color:rgba(48,209,88,.2); }
+    .ab-activar:hover { background:rgba(48,209,88,.15); }
+    .ab-rechazar  { background:var(--red-bg);color:var(--red);border-color:rgba(255,59,48,.2); }
+    .ab-rechazar:hover { background:rgba(255,59,48,.12); }
+    .ab-desactivar{ background:var(--amber-bg);color:var(--amber);border-color:rgba(255,149,0,.2); }
+    .ab-desactivar:hover { background:rgba(255,149,0,.14); }
+    .ab-eliminar  { background:var(--red-bg);color:var(--red);border-color:rgba(255,59,48,.2); }
+    .ab-eliminar:hover { background:rgba(255,59,48,.12); }
+    .ab-ver       { background:var(--blue-lt);color:var(--blue);border-color:var(--blue-md); }
+    .ab-ver:hover { background:rgba(30,134,212,.12); }
+    .ab-nota      { background:var(--purple-lt);color:var(--purple);border-color:var(--purple-md); }
+    .ab-nota:hover{ background:rgba(123,45,139,.12); }
+
+    .nota-input {
+      width:60px;padding:5px 8px;border:1px solid var(--border-hi);
+      border-radius:6px;font-size:13px;font-family:var(--font);
+      outline:none;text-align:center;
+    }
+    .nota-input:focus { border-color:var(--purple); }
+
+    .empty-state { padding:48px;text-align:center;color:var(--muted);font-size:13px; }
+    .empty-state i { font-size:32px;display:block;margin-bottom:10px;opacity:.3; }
+
+    .table-toolbar { display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border-bottom:1px solid var(--border); }
+    .search-input {
+      padding:7px 12px;border:1px solid var(--border-hi);border-radius:var(--r-sm);
+      font-size:13px;font-family:var(--font);outline:none;width:260px;
+      transition:.15s border-color;
+    }
+    .search-input:focus { border-color:var(--magenta); }
+
+    .modal-overlay { position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center;z-index:100;padding:24px; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:var(--white);border-radius:16px;padding:28px 32px;max-width:400px;width:100%;box-shadow:var(--shadow-md); }
+    .modal h3 { font-size:17px;font-weight:600;letter-spacing:-.03em;margin-bottom:6px; }
+    .modal p  { font-size:13px;color:var(--muted);margin-bottom:20px;line-height:1.5; }
+    .modal-nota-wrap { display:flex;flex-direction:column;gap:10px;margin-bottom:20px; }
+    .modal-nota-wrap label { font-size:12px;font-weight:500;color:var(--gray-500); }
+    .modal-nota-wrap input {
+      padding:10px 14px;border:1.5px solid var(--border-hi);border-radius:var(--r-sm);
+      font-size:16px;font-family:var(--font);outline:none;text-align:center;
+      transition:.15s border-color;
+    }
+    .modal-nota-wrap input:focus { border-color:var(--purple); }
+    .modal-nota-wrap textarea {
+      padding:10px 12px;border:1px solid var(--border-hi);border-radius:var(--r-sm);
+      font-size:13px;font-family:var(--font);outline:none;resize:none;
+      transition:.15s border-color;
+    }
+    .modal-nota-wrap textarea:focus { border-color:var(--purple); }
+    .modal-acts { display:flex;gap:10px;justify-content:flex-end; }
+
+    @media (max-width:800px){ .admin-stats{grid-template-columns:repeat(2,1fr)} .admin-body{padding:16px} .table-toolbar{flex-direction:column;align-items:stretch;gap:8px} .search-input{width:100%} .tabs{overflow-x:auto} }
+
+    .loading { display:flex;align-items:center;justify-content:center;padding:48px;color:var(--muted);font-size:13px;gap:8px; }
+
+    .ed-toolbar { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border); }
+    .ed-toolbar h3 { font-size:14px;font-weight:600;color:var(--text);margin:0; }
+    .ed-toolbar .ed-sub { font-size:12px;color:var(--muted);margin-top:2px; }
+    .ed-back { background:none;border:none;color:var(--blue);font-size:12.5px;cursor:pointer;padding:0;margin-bottom:6px;font-family:var(--font); }
+    .ed-back:hover { text-decoration:underline; }
+    .ed-list { list-style:none;margin:0;padding:0; }
+    .ed-item { display:flex;align-items:center;gap:14px;padding:12px 16px;border-bottom:1px solid var(--border); }
+    .ed-item:last-child { border-bottom:none; }
+    .ed-item:hover { background:var(--gray-50); }
+    .ed-item.ed-oculto .ed-titulo { color:var(--muted); }
+    .ed-num { width:28px;height:28px;flex:none;border-radius:50%;background:var(--gray-100);color:var(--gray-500);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600; }
+    .ed-main { flex:1;min-width:0; }
+    .ed-titulo { font-size:13.5px;font-weight:500;color:var(--text);line-height:1.35; }
+    .ed-meta { display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:5px;font-size:11.5px;color:var(--muted); }
+    .ed-acts { display:flex;gap:6px;align-items:center;flex:none; }
+    .ed-flechas { display:flex;flex-direction:column;gap:2px; }
+    .ed-flecha { width:24px;height:18px;border:1px solid var(--border);background:var(--white);border-radius:4px;cursor:pointer;font-size:9px;color:var(--gray-500);padding:0; }
+    .ed-flecha:hover:not(:disabled) { border-color:var(--blue);color:var(--blue); }
+    .ed-flecha:disabled { opacity:.35;cursor:default; }
+    .sp-oculto { background:var(--gray-100);color:var(--muted);border:1px solid var(--border); }
+    .sp-perfil { background:var(--blue-lt);color:var(--blue);border:1px solid var(--blue-md); }
+
+    .modal.modal-ancho { max-width:560px;max-height:90vh;overflow-y:auto; }
+    .ed-form .fg { margin-bottom:14px; }
+    .ed-form .fl { display:block;font-size:12px;font-weight:500;color:var(--gray-500);margin-bottom:6px; }
+    .ed-form .fi, .ed-form textarea {
+      width:100%;padding:9px 12px;border:1px solid var(--border-hi);border-radius:var(--r-sm);
+      font-size:13.5px;font-family:var(--font);outline:none;box-sizing:border-box;
+    }
+    .ed-form textarea { resize:vertical;min-height:70px; }
+    .ed-form .fi:focus, .ed-form textarea:focus { border-color:var(--blue); }
+    .ed-checks { display:flex;flex-direction:column;gap:8px; }
+    .ed-check { display:flex;align-items:flex-start;gap:9px;font-size:13px;color:var(--text);cursor:pointer;line-height:1.4; }
+    .ed-check input { margin-top:2px;accent-color:var(--blue); }
+    .ed-check small { display:block;color:var(--muted);font-size:11.5px; }
+    .ed-nota { font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.45; }
+    .ed-form select.fi { background:var(--white); }
+    .ed-video-estado { font-size:12px;margin-top:8px;line-height:1.45; }
+    .ed-preview { margin-top:10px;border-radius:var(--r-sm);overflow:hidden;border:1px solid var(--border);background:#000;aspect-ratio:16/9; }
+    .ed-preview iframe { width:100%;height:100%;border:0;display:block; }
+    .ed-mat { display:grid;grid-template-columns:1fr 1.4fr 24px;gap:6px;align-items:center;margin-bottom:6px; }
+    .ed-mat .fi { padding:7px 10px;font-size:12.5px; }
+    .ed-mat .mat-quitar { height:24px; }
+    @media (max-width:600px){ .ed-mat{grid-template-columns:1fr 24px} .ed-mat .mat-url{grid-column:1} .ed-acts{flex-wrap:wrap} }
+
+    .ed-preg { border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;margin-bottom:10px;background:var(--gray-50); }
+    .ed-preg-cab { display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;font-size:12.5px; }
+    .ed-preg-acts { display:flex;gap:4px; }
+    .ed-preg-acts .ed-flecha { height:22px;width:24px; }
+    .ed-preg textarea { background:var(--white);min-height:52px; }
+    .ed-opcs { display:flex;flex-direction:column;gap:6px;margin-top:8px; }
+    .ed-opc { display:grid;grid-template-columns:18px 22px 1fr;gap:6px;align-items:center;cursor:pointer; }
+    .ed-opc input[type="radio"] { accent-color:#1a7a35;width:16px;height:16px;margin:0; }
+    .ed-opc .fi { padding:6px 10px;font-size:12.5px;background:var(--white); }
+    .ed-letra { width:22px;height:22px;border-radius:50%;background:var(--white);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--gray-500); }
+    .ed-opc:has(input[type="radio"]:checked) .ed-letra { background:#1a7a35;border-color:#1a7a35;color:#fff; }
+    .ed-opc:has(input[type="radio"]:checked) .fi { border-color:#1a7a35; }
+    .ed-aviso { display:flex;gap:10px;align-items:flex-start;background:var(--amber-bg);border:1px solid rgba(255,149,0,.25);color:var(--text);border-radius:var(--r-sm);padding:10px 12px;font-size:12.5px;line-height:1.45;margin-bottom:12px; }
+    .ed-aviso i { color:var(--amber);margin-top:2px; }
+  </style>
+</head>
+<body data-page="admin">
+
+  <div id="carga-global" class="carga-global" role="status">
+    <div class="carga-caja"><div class="carga-spin"></div><p>Cargando el panel...</p></div>
+  </div>
+
+  <header class="admin-header">
+    <div class="admin-brand">
+      <img class="app-logo-img" src="assets/logo-promovilidad-color.webp" width="720" height="81" alt="PROMOVILIDAD"/>
+      <span class="admin-badge"><i class="fa-solid fa-shield-halved"></i> Administración</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <span style="font-size:12px;color:var(--muted)" id="admin-email"></span>
+
+      <button class="btn btn-sm btn-ghost" id="btn-respaldo" hidden title="Descarga en Excel todos los datos de la plataforma">
+        <i class="fa-solid fa-database"></i> Descargar respaldo
+      </button>
+      <button class="btn btn-sm btn-ghost" id="btn-salir">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Salir
+      </button>
+    </div>
+  </header>
+
+  <div class="admin-body">
+
+    <div class="admin-hero fu">
+      <h1>Panel de administración</h1>
+      <p>Aprueba alumnos, revisa trabajos, responde consultas y gestiona los cursos.</p>
+    </div>
+
+    <div class="admin-stats fu">
+      <div class="stat-box">
+        <span class="stat-ic ic-ambar"><i class="fa-solid fa-user-clock"></i></span>
+        <div><div class="n" id="stat-pendientes">—</div><div class="l">Solicitudes pendientes</div></div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-ic ic-verde"><i class="fa-solid fa-user-check"></i></span>
+        <div><div class="n" id="stat-activos">—</div><div class="l">Alumnos activos</div></div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-ic ic-azul"><i class="fa-solid fa-book-open-reader"></i></span>
+        <div><div class="n" id="stat-matriculas">—</div><div class="l">Matrículas totales</div></div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-ic ic-morado"><i class="fa-solid fa-file-circle-check"></i></span>
+        <div><div class="n" id="stat-examenes">—</div><div class="l">Trabajos por revisar</div></div>
+      </div>
+      <div class="stat-box">
+        <span class="stat-ic ic-gris"><i class="fa-solid fa-comments"></i></span>
+        <div><div class="n" id="stat-consultas">—</div><div class="l">Consultas sin responder</div></div>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="solicitudes" onclick="switchTab('solicitudes')">
+        <i class="fa-solid fa-clock"></i> Solicitudes
+        <span class="tab-badge" id="badge-sol">0</span>
+      </button>
+      <button class="tab" data-tab="alumnos" onclick="switchTab('alumnos')">
+        <i class="fa-solid fa-users"></i> Alumnos
+      </button>
+      <button class="tab" data-tab="seguimiento" onclick="switchTab('seguimiento')">
+        <i class="fa-solid fa-chart-line"></i> Seguimiento
+      </button>
+      <button class="tab" data-tab="examenes" onclick="switchTab('examenes')">
+        <i class="fa-solid fa-file-circle-check"></i> Trabajos
+        <span class="tab-badge" id="badge-exam">0</span>
+      </button>
+      <button class="tab" data-tab="consultas" onclick="switchTab('consultas')">
+        <i class="fa-solid fa-comments"></i> Consultas
+        <span class="tab-badge" id="badge-cons">0</span>
+      </button>
+      <button class="tab" data-tab="cursos" onclick="switchTab('cursos')">
+        <i class="fa-solid fa-book-open"></i> Cursos
+      </button>
+    </div>
+
+    <div class="tab-panel active" id="panel-solicitudes">
+      <div class="admin-table-wrap">
+        <div class="table-toolbar">
+          <span style="font-size:13px;font-weight:500;color:var(--text)">Solicitudes pendientes de aprobación</span>
+          <input class="search-input" type="text" placeholder="Buscar por nombre, email, DNI..." id="search-sol" oninput="filtrarTabla('sol')"/>
+        </div>
+        <div id="tabla-solicitudes">
+          <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panel-alumnos">
+      <div class="admin-table-wrap">
+        <div class="table-toolbar">
+          <span style="font-size:13px;font-weight:500;color:var(--text)">Alumnos registrados</span>
+          <input class="search-input" type="text" placeholder="Buscar por nombre, email, DNI..." id="search-alum" oninput="filtrarTabla('alum')"/>
+        </div>
+        <div id="tabla-alumnos">
+          <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panel-examenes">
+      <div class="admin-table-wrap">
+        <div class="table-toolbar">
+          <span style="font-size:13px;font-weight:500;color:var(--text)">Trabajos finales entregados</span>
+          <select class="search-input" id="filtro-trab" style="width:200px" onchange="filtrarTrabajos()">
+            <option value="pendiente">Por revisar</option>
+            <option value="">Todos</option>
+          </select>
+        </div>
+        <div id="tabla-examenes">
+          <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panel-seguimiento">
+      <div class="admin-table-wrap">
+        <div class="table-toolbar" style="gap:10px;flex-wrap:wrap">
+          <select class="search-input" id="sg-curso" style="width:340px"></select>
+          <div style="display:flex;gap:8px;align-items:center">
+            <input class="search-input" type="text" placeholder="Buscar alumno..." id="sg-buscar"/>
+            <button class="btn btn-sm btn-ghost" id="sg-csv" title="Descargar para Excel"><i class="fa-solid fa-file-excel"></i> Excel</button>
+          </div>
+        </div>
+        <div id="tabla-seguimiento">
+          <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panel-consultas">
+      <div class="admin-table-wrap">
+        <div class="table-toolbar">
+          <span style="font-size:13px;font-weight:500;color:var(--text)">Consultas de los alumnos</span>
+          <select class="search-input" id="cs-filtro" style="width:200px">
+            <option value="pendientes">Sin responder</option>
+            <option value="todas">Todas</option>
+          </select>
+        </div>
+        <div id="lista-consultas">
+          <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" id="panel-cursos">
+      <div class="admin-table-wrap" id="editor-cursos">
+        <div class="loading"><i class="fa-solid fa-spinner fa-spin"></i> Cargando...</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal-overlay" id="modal-editor">
+    <div class="modal modal-ancho">
+      <h3 id="me-titulo">Editar</h3>
+      <p id="me-desc" style="margin-bottom:16px"></p>
+      <form class="ed-form" id="me-form" novalidate></form>
+      <div class="modal-acts">
+        <button class="btn btn-ghost" type="button" id="me-cancelar">Cancelar</button>
+        <button class="btn btn-grad" type="button" id="me-guardar"><i class="fa-solid fa-check"></i> Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="modal-nota">
+    <div class="modal">
+      <h3>Revisar trabajo final</h3>
+      <p id="modal-nota-desc">Alumno · Curso</p>
+      <div class="modal-nota-wrap">
+        <a class="act-btn ab-ver" id="rev-abrir" href="#" target="_blank" rel="noopener" style="text-align:center;padding:8px">
+          <i class="fa-brands fa-google-drive"></i> Abrir el trabajo en Drive
+        </a>
+        <label>Comentario para el alumno (obligatorio si lo observas)</label>
+        <textarea id="input-comentario" rows="3" placeholder="Qué debe corregir, o una felicitación..."></textarea>
+      </div>
+      <div class="modal-acts">
+        <button class="btn btn-ghost" onclick="cerrarModalNota()">Cancelar</button>
+        <button class="btn btn-ghost" id="btn-observar" onclick="guardarRevision('desaprobado')" style="color:var(--amber)">
+          <i class="fa-solid fa-triangle-exclamation"></i> Observar
+        </button>
+        <button class="btn btn-grad" id="btn-guardar-nota" onclick="guardarRevision('revisado')">
+          <i class="fa-solid fa-check"></i> Conforme
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script type="module" src="js/supabase.js?v=202611060003"></script>
+  <script type="module" src="js/admin.js?v=202611060003"></script>
+  <script type="module" src="js/admin-cursos.js?v=202611060003"></script>
+  <script type="module" src="js/admin-seguimiento.js?v=202611060003"></script>
+</body>
+</html>
